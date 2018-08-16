@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css"/>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="jquery.datetimepicker.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body ng-app='app' ng-controller='controller'>
+		<h2>{{selectTime}}</h2>
+		<input type="text" id="datetimepicker" /><br><br>
+		
+		<script type="text/javascript">
+			
+			angular.module('app',[]).controller('controller',function($scope){
+				$('#datetimepicker').datetimepicker({
+				lang:'ch',
+ 				format:'Y-m-d H:00:00',
+ 				onChangeDateTime:function(data,mon,dd){
+ 					$scope.$apply(function(){
+ 						$scope.selectTime=mon[0].value;
+ 					});
+ 				},
+
+				});
+			});
+			
+		</script>
+	</body>
+</html>

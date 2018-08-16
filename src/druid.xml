@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+	<property name="url" value="${jdbc_url}"></property>
+	<property name="username" value="${jdbc_username}"></property>
+	<property name="password" value="${jdbc_password}"></property>
+	<property name="initialSize" value="10"></property>
+	<property name="minIdle" value="0"></property>
+	<property name="maxActive" value="20"></property>
+</bean>

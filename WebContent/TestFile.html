@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>测试formdata的后台解析</title>
+		<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="div">
+			<input type="file" name="file" id="file"/>
+			<button name="test">上传</button>
+		</div>
+		<script type="text/javascript">
+			$("button[name='test']").click(function(){
+				alert("测试开始");
+				debugger;
+				console.log(document.getElementById("file").files)
+				var file = document.getElementById("file").files[0];
+				var formdata = new FormData();
+				
+				formdata.append("file",formdata);
+				$.ajax({
+					type:"POST",
+					url:"http://localhost:8080/yuyueSystem/test",
+					data:{
+						"file":formdata
+					}
+					success:function(){
+						alert("chengogn");
+					},
+					error:function(){
+						alert("fail");
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

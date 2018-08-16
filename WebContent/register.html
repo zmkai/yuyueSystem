@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户注册页面</title>
+		<style type="text/css">
+			.wai {
+				border: 1px solid #dce3e8;
+				padding: 50px;
+				margin: 50px 32%;
+			}
+			
+			.div1 input {
+				display: block;
+				margin: 20px 10px;
+				padding: 2px;
+				height: 25px;
+			}
+			
+			input {
+				height: 20px;
+			}
+			
+			.label1 {
+				float: left;
+				height: 33px;
+				min-width: 95px;
+				font-size: 14px;
+				font-weight: bold;
+				color: #666666;
+				text-align: right;
+				padding-top: 5px;
+				margin-right: 20px;
+			}
+			
+			input[name="register"] {
+				width: 177px;
+				background-color: #fe7300;
+				border-radius: 10px;
+				height: 33px;
+				margin-left: 29%;
+			}
+		</style>
+		<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div class="wai">
+			
+			<form action="http://localhost:8080/yuyueSystem/register" method="post" enctype="multipart/form-data">
+				<div class="div1">
+					<label class="label1">申请账号：</label>
+					<input type="text" name="account" placeholder="请输入要申请的账号" />
+				</div>
+				<div class="div1">
+					<label class="label1">密码：</label>
+					<input type="password" name="password" placeholder="请输入你的密码" />
+				</div>
+				<div class="div1">
+					<label class="label1">用户名：</label>
+					<input type="text" name="username" placeholder="请输入你的用户名" />
+				</div>
+				<div class="div1">
+					<label class="label1">邮箱：</label>
+					<input type="email" name="email" placeholder="请输入你的可用邮箱 " />
+				</div>
+				<div class="div1">
+					<label class="label1">校园卡照片：</label>
+					<input id="fileUpload" type="file" name="file" />
+				</div>
+				<div class="div1">
+					<input type="submit" id="register" name="register" value="注册"></input>
+				</div>
+			</form>
+		</div>
+
+		<!--<script type="text/javascript">
+			
+			$("#register").click(function() {
+				alert("jkj");
+				//js获取文件对象
+				var file = document.getElementById("fileUpload").files[0];
+				if(typeof(file) == "undefined" || file.size <= 0) {
+					alert("请选择图片");
+					return;
+				}
+				var formFile = new FormData;
+				formFile.append("file", file);
+				debugger;
+				$.post("http://localhost:8080/yuyueSystem/register", {
+					account: $("input[name='account']").val(),
+					password: $("input[name='password']").val(),
+					username: $("input[name='username']").val(),
+					email: $("input[name='email']").val(),
+					photo:formFile
+				}, function(data,status) {
+					alert("上传成功");
+				})
+			})
+		</script>-->
+		<!--
+		<script type="text/javascript">
+			$("input[name='register']").click(function(){
+				var formdata = new FormData(document.getElementById("formData"));
+				alert(formdata);
+				$.ajax({
+					url:"http://localhost:8080/yuyueSystem/register",
+					type:"POST",
+					dataType:"json",
+					data:formdata,
+					success:function(data){
+						alert("succe");
+					}
+				});
+			})
+		-->
+		</script>
+	</body>
+
+</html>

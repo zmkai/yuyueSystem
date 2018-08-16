@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的预约情况</title>
+		<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div>
+
+			<label>
+      <div align="center">
+        <input type="button" id="button1" name="resourceType" value="未通过审核" />
+    </div>
+    </label>
+
+			<label>
+      <div align="center">
+        <input type="button" id="button2" name="resourceType" value="已通过审核" />
+     </div>
+    </label>
+
+		</div>
+		<div>
+			<table id="mytable" width="1102" border="1" align="center">
+				<tr>
+					<td width="222">
+						<div align="center">资源名称</div>
+					</td>
+					<td width="222">
+						<div align="center">资源开始使用时间</div>
+					</td>
+					<td width="222">
+						<div align="center">资源结束使用时间</div>
+					</td>
+					<td width="222">
+						<div align="center">资源所属类型</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//localStorage.setItem("account", "195140040");
+		var account = localStorage.getItem("account");
+		var mytable = document.getElementById("mytable");
+		var html2 = '<tr> <td width = "222" ><div align = "center" >资源名称 </td> <td width = "222" ><div align = "center" >资源开始使用时间</td> <td width = "222" ><div align = "center" >资源结束使用时间 </td> <td width = "222" ><div align = "center" >资源所属类型 </td> </tr>';
+		$("#button1").click(function() {
+//			alert("未通过");
+			//未通过审核
+			$.ajax({
+				type: "get",
+				url: "http://localhost:8080/yuyueSystem/getMyRecord",
+				data: {
+					mark: '0',
+					account: account
+				},
+				dataType: "json",
+				success: function(data) {
+					console.log(data);
+//					alert(data);
+					var html = " ";
+					mytable.innerHTML = html2;	
+					var name = "";
+					var resourceType = "";
+					if(data.code == 0) {
+						for(var i = 0; i < data.data.length; i++) {
+//							alert(data.data[i].resourcemark);
+							if(data.data[i].resourcemark == 0) {
+								resourceType = "实验室资源"
+								name = data.data[i].labname;
+							} else {
+								name = data.data[i].equ_name;
+								resourceType = "大型设备";
+							}
+							html += '<tr> <td width = "222" ><div align = "center" >' +
+								name +
+								' </td> <td width = "222" ><div align = "center" >' +
+								data.data[i].startTime +
+								' </td> <td width = "222" ><div align = "center" >' +
+								data.data[i].endTime +
+								' </td> <td width = "222" ><div align = "center" >' +
+								resourceType +
+								' </td> </tr>';
+						}
+//						alert(mytable.innerHTML);
+//						console.log(html);
+//						console.log(mytable);
+						mytable.innerHTML += html;
+
+					}else{
+						alert(data.msg);
+					}
+				},
+				error: function() {
+					alert("出现异常");
+				}
+			});
+		});
+		$("#button2").click(function() {
+			//通过审核
+//			alert("通过");
+			$.ajax({
+				type: "get",
+				url: "http://localhost:8080/yuyueSystem/getMyRecord",
+				dataType: "json",
+				data: {
+					mark: '1',
+					account: account
+				},
+				success: function(data) {
+//					alert(data);
+					var html = "";
+					mytable.innerHTML = html2;
+					var resourceType = "";
+					if(data.code == 0) {
+						for(var i = 0; i < data.data.length; i++) {
+//							alert(data.data[i].resourcemark);
+							if(data.data[i].resourcemark == 0) {
+								resourceType = "实验室资源"
+								name = data.data[i].labname;
+							} else {
+								name = data.data[i].equ_name;
+								resourceType = "大型设备";
+							}
+							html += '<tr> <td width = "222" ><div align = "center" >' +
+								name +
+								' </td> <td width = "222" ><div align = "center" >' +
+								data.data[i].startTime +
+								' </td> <td width = "222" ><div align = "center" >' +
+								data.data[i].endTime +
+								' </td> <td width = "222" ><div align = "center" >' +
+								resourceType +
+								' </td> </tr>';
+						}
+//						alert(mytable.innerHTML);
+//						console.log(html);
+//						console.log(mytable);
+						mytable.innerHTML += html;
+					}else{
+						alert(data.msg);
+					}
+				}
+			});
+		});
+	</script>
+	</body>
+
+</html>

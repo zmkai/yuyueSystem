@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>个人中心</title>
+		<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body {
+				text-align: center;
+			}
+			
+			.bigdiv {
+				text-align: center;
+				border: 1px solid white;
+				box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, .2);
+				width: 450px;
+				margin: 0 auto;
+			}
+			
+			.div {
+				padding: 10px;
+			}
+			
+			img {
+				width: 230px;
+				height: 150px;
+			}
+			
+			span {
+				margin: 4px;
+				font-size: 14px;
+				font-weight: bold;
+			}
+			
+			input {
+				height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="bigdiv1">
+			<div class="bigdiv">
+				<div class="div">
+					<span ">
+					我的账号
+				</span>
+				<input id="account" type="text " name="account " value="195140040"/>
+			</div>
+			<div class="div ">
+				<span ">我的名字</span>
+					<input id="name" type="text" name="username" value="周梦凯" />
+				</div>
+				<div class="div">
+					<span ">我的邮箱</span>
+				<input id="email " type="email " name="email " value="1937915896@qq.com " />
+			</div>
+			<div class="div ">
+				<span ">我的身份</span>
+					<input id="identity" type="text" name="identity" value="管理员" />
+				</div>
+				<div class="div">
+					<div class="div1">
+						<img id="myimg" src="img/shoye.jpg" />
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var account = localStorage.getItem("account");
+			//alert(localStorage.getItem("account"));
+			$.ajax({
+				type: "GET",
+				url: "http://localhost:8080/yuyueSystem/lookMyself",
+				dataType: "json",
+				data: {
+					account: account
+				},
+				success: function(data) {
+					//console.log(data);
+					if(data.code == 0) {
+						//debugger;
+						$("#account").val(data.data[0].account);
+						$("#name").val(data.data[0].username);
+						$("#email").val(data.data[0].email);
+						if(data.data[0].identity == 0) {
+							$("#identity").val("管理员");
+						} else {
+							$("#identity").val("普通用户");
+						}
+						//alert(data.data[0].photo_path);
+						document.getElementById("myimg").src = data.data[0].photo_path;
+						//$("#myimg").src = "d://1.png";
+					} else {
+						alert(data.msg);
+					}
+				},
+				error: function() {
+					alert("fail");
+				}
+			});
+
+			//			localStorage.setItem("account","1951400401");
+			//			localStorage.setItem("username","周梦凯1");
+			//			localStorage.setItem("email","1937915896@qq.com1");
+			//			localStorage.setItem("identity","0");
+			//			localStorage.setItem("photo_path","img/shoye.jpg");
+
+//			var account = localStorage.getItem("account");
+//			var username = localStorage.getItem("username");
+//			var email = localStorage.getItem("email");
+//			var identity = localStorage.getItem("identity");
+//			var photo_path = localStorage.getItem("photo_path");
+//			console.log(localStorage);
+//			$("#account").val(account);
+//			$("#name").val(username);
+//			$("#email").val(email);
+//			if(identity == 0) {
+//				$("#identity").val("管理员");
+//			} else {
+//				$("#identity").val("普通用户");
+//			}
+//			$("#myimg").src = photo_path;
+		</script>
+	</body>
+
+</html>

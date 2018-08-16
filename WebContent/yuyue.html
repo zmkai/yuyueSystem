@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>去预约界面</title>
+		<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css" />
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/angular.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.datetimepicker.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body {
+				text-align: center;
+			}
+			
+			.div {
+				text-align: center;
+				width: 500px;
+				height: 450px;
+				border: 1px solid white;
+				box-shadow: 0 0px 10px 2px rgba(0, 0, 0, .2);
+				margin: 0 auto;
+			}
+			
+			.div1 {
+				margin: 5px;
+				padding: 10px;
+			}
+			
+			button {
+				margin: 15px;
+				background-color: #fffff6;
+				border-radius: 5px;
+				padding: 8px;
+			}
+			
+			span {
+				margin: 4px;
+				font-size: 14px;
+				font-weight: bold;
+			}
+			
+			input[type='text'] {
+				height: 25px;
+			}
+			
+			input[type='radio'] {
+				margin: 5px 5px;
+			}
+			
+			select {
+				height: 35px;
+			}
+		</style>
+
+	</head>
+
+	<body ng-app='app' ng-controller='controller'>
+		<div class="div">
+			<div class="div1">
+				<span id="">
+					注意：预约的时间只能为整点进行
+				</span>
+
+			</div>
+			<div class="div1">
+				<input type="radio" name="resourceType" checked="true" value="0" />
+				<span id="">
+					实验室
+				</span>
+				<input type="radio" name="resourceType" value="1" />
+				<span id="">
+					大型设备
+				</span>
+			</div>
+			<div class="div1">
+				<span id="">
+					预约选择：
+				</span>
+				<select id="myselect" name="myselect">
+					<option disabled="true">请选择</option>
+					<option value="213">计算机实验室213</option>
+				</select>
+			</div>
+			<div class="div1">
+				<span id="">
+					预约开始时间
+				</span>
+				<input type="text" id="datetimepicker" />
+			</div>
+			<div class="div1">
+				<span id="">
+					预约结束时间
+				</span>
+				<input type="text" id="datetimepicker1" />
+			</div>
+
+			<div class="div1">
+				<button id="yuyue">预约</button>
+				<button id="fanhui">返回</button>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var mark = "0";
+			//localStorage.setItem("account", "195140040");
+			var account = localStorage.getItem("account");
+			var option = document.getElementById("myselect");
+			angular.module('app', []).controller('controller', function($scope) {
+				$('#datetimepicker').datetimepicker({
+					lang: 'ch',
+					format: 'Y-m-d H:00:00',
+					onChangeDateTime: function(data, mon, dd) {
+						$scope.$apply(function() {
+							$scope.selectTime = mon[0].value;
+						});
+					},
+				});
+
+				$('#datetimepicker1').datetimepicker({
+					lang: 'ch',
+					format: 'Y-m-d H:00:00',
+					onChangeDateTime: function(data, mon, dd) {
+						$scope.$apply(function() {
+							$scope.selectTime = mon[0].value;
+						});
+					},
+				});
+			});
+			$("input[name='resourceType']").click(function() {
+				//alert("dianji");
+				var checked = $("input[name='resourceType']:checked");
+				console.log(checked);
+
+				checked = checked.val();
+				if(checked == 0) { //实验室资源
+					$.ajax({
+						type: "get",
+						url: "http://localhost:8080/yuyueSystem/getlabs",
+						dataType: "json",
+						success: function(data) {
+							mark = "0";
+							console.log(data)
+							if(data.code == 0) {
+								var html = '<option disabled="true">请选择</option>';
+								for(var i = 0; i < data.data.length; i++) {
+									html += '<option value="' + data.data[i].code + '">' + data.data[i].labname + '</option>';
+								}
+								//console.log(html);
+								option.innerHTML = html;
+							} else {
+								alert(data.msg);
+							}
+						},
+						error: function() {
+							alert("出现异常");
+						}
+					});
+				} else if(checked == 1) {
+					//大型设备
+					//alert("大型设备");
+					$.ajax({
+						type: "get",
+						url: "http://localhost:8080/yuyueSystem/getDataByType",
+						dataType: "json",
+						success: function(data) {
+							mark = "1";
+							console.log(data);
+							if(data.code == 0) {
+								var html = '<option disabled="true">请选择</option>';
+								for(var i = 0; i < data.data.length; i++) {
+									html += '<option value="' + data.data[i].equ_code + '">' + data.data[i].equ_name + '</option>';
+								}
+								option.innerHTML = html;
+							} else {
+								alert(data.msg);
+							}
+						}
+					});
+				}
+			});
+			$("#yuyue").click(function() {
+				$.ajax({
+					type: "post",
+					url: "http://localhost:8080/yuyueSystem/yuyue",
+					dataType: "json",
+					data: {
+						resourcemark:mark,
+						code: $("#myselect").val(),
+						startTime: $("#datetimepicker").val(),
+						endTime: $("#datetimepicker1").val(),
+						account: account
+					},
+					success: function(data) {
+
+						console.log(data);
+						if(data.code == 0) {
+							alert(data.msg);
+						} else {
+							alert(data.msg);
+						}
+					},
+					error: function() {
+						alert("fail");
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

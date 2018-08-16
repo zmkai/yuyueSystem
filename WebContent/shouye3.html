@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>首页</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body,
+			#footer {
+				margin: auto;
+				padding: auto;
+				background-color: #f2f7fa;
+			}
+			
+			#header {
+				background-size: contain;
+				background-repeat: repeat-x;
+				width: 100%;
+				text-align: center;
+				line-height: 80px;
+				height: 80px;
+				color: black;
+				margin: 0;
+				background-color: white;
+				box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .1);
+			}
+			
+			#nav {
+				line-height: 60px;
+				background-color: #616a87;
+				height: 540px;
+				float: left;
+				padding: 10px;
+			}
+			
+			#section {
+				float: left;
+				padding: 5px;
+				background-color: #f2f7fa;
+				z-index: 0;
+			}
+			
+			#footer {
+				background-color: white;
+				color: black;
+				clear: both;
+				text-align: center;
+				padding: 10px;
+				height: 80px;
+			}
+			
+			.div1 {
+				background-color: #f0f5fb;
+				height: 40px;
+				line-height: 40px;
+				text-align: left;
+				padding: 0px 10px;
+			}
+			
+			span {
+				font-size: 30px;
+			}
+			
+			ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				width: 150px;
+				z-index: 2;
+			}
+			
+			li a {
+				display: block;
+				color: #000;
+				padding: 2px 16px;
+				text-decoration: none;
+				text-align: center;
+			}
+			
+			.div2 {
+				position: relative;
+				height: 300px;
+				width: 600px;
+			}
+			
+			#tixing {
+				float: left;
+			}
+			
+			.div3,
+			.div5 {
+				position: absolute;
+				background-color: #ffffff;
+				box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, .3);
+				margin-left: 250px;
+				margin-top: 100px;
+			}
+			
+			.div4 {
+				line-height: 50px;
+			}
+			
+			.div5 {
+				position: absolute;
+				margin-left: 750px;
+				width: 350px;
+			}
+			
+			.div6 {
+				position: relative;
+				text-align: center;
+				height: 50px;
+				line-height: 50px;
+				margin-bottom: 0px;
+				margin-top: 180px;
+				bottom: auto;
+				background-color: #f2f7fa;
+				float: right;
+			}
+			
+			li a:hover {
+				background-color: #57607d;
+				color: white;
+			}
+			
+			ul li:hover {
+				background-color: #eeeeee;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="header">
+			<span>
+				实验室网上预约系统
+			</span>
+		</div>
+		<div class="bigDiv">
+
+			<div id="nav">
+				<ul>
+					<li>
+						<a href="">周梦凯</a>
+					</li>
+					<li>
+						<a name="myshouye" href="">首页</a>
+					</li>
+					<li>
+						<a name="myyuyue" href="">我的预约</a>
+					</li>
+					<li>
+						<a name="yuyuecondition" href="">预约情况</a>
+					</li>
+					<li>
+						<a name="quyuyue" href="">去预约</a>
+					</li>
+				</ul>
+			</div>
+
+			<div id="section">
+
+				<div class="div2">
+					<div class="div3">
+						<img id="tixing" src="img/tixing.png" />
+
+						<div class="div4">
+							<h4>预约提醒</h4> 你可以在早上8点到晚上5点的时间段进行预约，不过预约时间可以为24小时中的任何一个非占用时间点
+						</div>
+
+					</div>
+					<div class="div5">
+						<img id="tixing" src="img/naozhong.png" />
+
+						<div class="div4">
+							<h4>使用提醒</h4> 各位老师和同学们在使用实验室要注意保持实验室卫生，而在使用实验室设备或者大型设备时，要注意使用安全。保护设备
+						</div>
+
+					</div>
+				</div>
+
+				<div class="div6">
+					<p>该系统所有权为计算机2班开发人所有</p>
+				</div>
+
+			</div>
+
+		</div>
+		<!--
+		<div id="footer">
+			Copyright ? W3Schools.com
+		</div>
+	-->
+	</body>
+
+</html>

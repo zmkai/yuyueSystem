@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>导航栏</title>
+		<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			#nav {
+				line-height: 60px;
+				background-color: #616a87;
+				height: 500px;
+				float: left;
+				padding: 10px;
+			}
+			
+			ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				width: 150px;
+				z-index: 2;
+			}
+			
+			li a {
+				display: block;
+				color: #000;
+				padding: 2px 16px;
+				text-decoration: none;
+				text-align: center;
+			}
+			
+			li a:hover {
+				background-color: #57607d;
+				color: white;
+			}
+			
+			ul li:hover {
+				background-color: #eeeeee;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="nav">
+			<ul>
+				<li>
+					<a href="myself.html" id="name"  target="showright">
+						周梦凯
+					</a>
+				</li>
+				<li>
+					<a href="neirong1.html" id="myshouye" target="showright">
+						首页
+					</a>
+				</li>
+				<li>
+					<a  href="myyuyueContion.html" target="showright">
+						我的预约
+					</a>
+				</li>
+				<li>
+					<a href="yuyueContion.html" target="showright">
+						预约情况
+					</a>
+				</li>
+				<li>
+					<a href="yuyue.html" target="showright">
+						去预约
+					</a>
+				</li>
+				
+				<li >
+					<a id="a1" style="display: none;"  href="unCheckedUser.html"  target="showright">
+						待审核用户
+					</a>
+				</li>
+				
+				<li >
+					<a id="a2" style="display:none;"  href="unCheckedRecord.html" target="showright">
+						待审核预约
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<script type="text/javascript">
+			var username = localStorage.getItem("username");
+			var account = localStorage.getItem("account");
+//			username = "zho"
+			document.getElementById("name").innerText = username;
+			var identity = localStorage.getItem("identity");
+			//identity = 0;
+			//alert(identity);
+			if(identity==0){
+				console.log()
+				$("#a1").show();
+				$('#a2').show();
+			}
+//			$("#name").click(function() {
+//				alert("qingqiu");
+//				alert(account);
+//				$.ajax({
+//					type: "GET",
+//					url: "http://localhost:8080/yuyueSystem/lookMyself",
+//					dataType: "json",
+//					data: {
+//						account: account
+//					},
+//					success: function(data) {
+//						console.log(data);
+//						alert("successful");
+//						if(data.code == 0) {
+//							localStorage.setItem("account", data.data[0].account);
+//							localStorage.setItem("username", data.data[0].username);
+//							localStorage.setItem("email", data.data[0].email);
+//							localStorage.setItem("identity", data.data[0].identity);
+//							localStorage.setItem("photo_path", data.data[0].photo_path);
+//						} else {
+//							alert(data.msg);
+//						}
+//					},
+//					error: function() {
+//						alert("fail");
+//					}
+//				});
+//			});
+			
+		
+		</script>
+	</body>
+
+</html>

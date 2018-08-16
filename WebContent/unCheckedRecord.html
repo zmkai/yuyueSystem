@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+		<title>待审核用户</title>
+		<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div>
+			<table id="mytable" width="1000" border="1">
+				<tr>
+					<td width="200">
+						<div align="center">用户名称</div>
+					</td>
+					<td width="200">
+						<div align="center">资源名称</div>
+					</td>
+					<td width="200">
+						<div align="center">资源开始使用时间</div>
+					</td>
+					<td width="200">
+						<div align="center">资源使用结束时间</div>
+					</td>
+					<td width="200">
+						<div align="center">操作</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="200">
+						<div align="center">周梦凯</div>
+					</td>
+					<td width="200">
+						<div align="center">实验室213</div>
+					</td>
+					<td width="200">
+						<div align="center">1937915896@qq.com</div>
+					</td>
+					<td width="200">
+						<div align="center"><img name="myimg" src="" width="200" height="150"></div>
+					</td>
+					<td width="200">
+						<div align="center">
+							<table width="200" border="1">
+								<tr>
+									<td>
+										<div align="center">
+											<input id="button1" type="submit" onclick="check1()" name="Submit" value="通过">
+										</div>
+									</td>
+									<td>
+										<div align="center">
+											<input id="button2" type="submit" onclick="check2()" name="Submit2" value="不通过">
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<script type="text/javascript">
+			//localStorage.setItem("account", "195140040");
+			//localStorage.setItem("email", "1937915896@qq.com");
+			var table = document.getElementById("mytable");
+			var button1 = $("#button1");
+			var button2 = $("#button2");
+			var html1 = '<tr>' +
+				'<td width="200"><div align="center">用户名称</div></td>' +
+				'<td width="200"><div align="center">资源名称</div></td>' +
+				'<td width="200"><div align="center">资源开始使用时间</div></td>' +
+				'<td width="200"><div align="center">资源使用结束时间</div></td>' +
+				'<td width="200"><div align="center">操作</div></td>' +
+				'</tr>';
+
+			function check1(data1, data2) {
+				//审核通过
+
+				$.ajax({
+					type: "get",
+					url: "http://localhost:8080/yuyueSystem/checkRecord",
+					dataType: "json",
+					data: {
+						id: data1,
+						email: data2,
+						mark: '1'
+					},
+					success: function(data) {
+						//						console.log(data);
+						if(data.code == 0) {
+							alert(data.msg);
+							get();
+						} else {
+							alert(data.msg);
+						}
+					},
+					error: function() {
+						alert("fail");
+					}
+				});
+			}
+			function get() {
+				$.ajax({
+					type: "get",
+					url: "http://localhost:8080/yuyueSystem/getUncheckedRecord",
+					dataType: "json",
+					success: function(data) {
+						var html2 = " ";
+						if(data.code == 0) {
+							console.log(data.data[0].id);
+							for(var i = 0; i < data.data.length; i++) {
+								var data1 = data.data[i];
+								var name = " ";
+								if(data.data[i].resourcemark == 0) {
+									name = data.data[i].labname;
+								} else if(data.data[i].resourcemark == 1) {
+									name = data.data[i].equ_name;
+								}
+								console.log(typeof(data.data[i].username))
+								html2 += ' <tr>' +
+									'<td width="200"><div align="center">' +
+									data.data[i].username +
+									'</div></td>' +
+									'<td width="200"><div align="center">' +
+									name +
+									'</div></td>' +
+									'<td width="200"><div align="center">' +
+									data.data[i].startTime +
+									'</div></td>' +
+									'<td width="200"><div align="center">' +
+									data.data[i].endTime +
+									'</div></td>' +
+									'<td width="200"><div align="center">' +
+									'<table width="200" border="1">' +
+									'<tr>' +
+									'<td><div align="center">' +
+									'<input id="button' +
+									'a' + i + '" type="submit" onclick="check1(' + "'" + data.data[i].id + "'," + "'" + data.data[i].email + "'" + ')" name="Submit" value="通过">' +
+									' </div></td>' +
+									'<td><div align="center">' +
+									'<input id="button' +
+									'b' + i + '" type="submit" onclick="check2(' + "'" + data.data[i].id + "'," + "'" + data.data[i].email + "'" + ')" name="Submit" value="不通过">' +
+									'</div></td>' +
+									'</tr>' +
+									'</table>' +
+									'</div></td>' +
+									'</tr>';
+							}
+							//console.log(html2);
+							document.getElementById("mytable").innerHTML = html1 + html2;
+						}
+					}
+
+				});
+			}
+			get();
+			
+			function check2(data1, data2) {
+
+				$.ajax({
+					type: "get",
+					url: "http://localhost:8080/yuyueSystem/checkRecord",
+					dataType: "json",
+					data: {
+						id: data1,
+						email: data2,
+						mark: '0'
+					},
+					success: function(data) {
+						//						console.log(data);
+						if(data.code == 0) {
+							alert(data.msg);
+							get();
+						} else {
+							alert(data.msg);
+						}
+					},
+					error: function() {
+						alert("fail");
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

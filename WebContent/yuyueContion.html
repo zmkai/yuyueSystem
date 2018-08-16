@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>预约情况</title>
+		<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+	
+		<div>
+			<table id="mytable" width="1102" border="1" align="center">
+				<tr>
+					<td width="222">
+						<div align="center">资源名称</div>
+					</td>
+					<td width="222">
+						<div align="center">资源开始使用时间</div>
+					</td>
+					<td width="222">
+						<div align="center">资源结束使用时间</div>
+					</td>
+					<td width="222">
+						<div align="center">资源所属类型</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//localStorage.setItem("account", "195140040");
+		var account = localStorage.getItem("account");
+		var mytable = document.getElementById("mytable");
+		mytable.innerHTML = " ";
+		var html2 = '<tr> <td width = "222" ><div align = "center" >资源名称 </td> <td width = "222" ><div align = "center" >资源开始使用时间</td> <td width = "222" ><div align = "center" >资源结束使用时间 </td> <td width = "222" ><div align = "center" >资源所属类型 </td><td width = "222" ><div align = "center" >预约人 </td> </tr>';
+			$.ajax({
+				type: "get",
+				url: "http://localhost:8080/yuyueSystem/getCheckedRecord",
+				dataType: "json",
+				success: function(data) {
+					console.log(data);
+//					alert(data);
+					var html = " ";
+					mytable.innerHTML = html2;	
+					var name = "";
+					var resourceType = "";
+					if(data.code == 0) {
+						for(var i = 0; i < data.data.length; i++) {
+							var username = data.data[i].username;
+//							alert(data.data[i].resourcemark);
+							if(data.data[i].resourcemark == 0) {
+								resourceType = "实验室资源"
+								name = data.data[i].labname;
+							} else {
+								name = data.data[i].equ_name;
+								resourceType = "大型设备";
+							}
+							html += '<tr> <td width = "222" ><div align = "center" >' +
+								name +
+								' </td> <td width = "222" ><div align = "center" >' +
+								data.data[i].startTime +
+								' </td> <td width = "222" ><div align = "center" >' +
+								data.data[i].endTime +
+								' </td> <td width = "222" ><div align = "center" >' +
+								resourceType +
+								' </td> <td width = "222" ><div align = "center" >' +
+								data.data[i].username +
+								' </td></tr> ';
+						}
+//						alert(mytable.innerHTML);
+//						console.log(html);
+//						console.log(mytable);
+						mytable.innerHTML += html;
+
+					}
+				},
+				error: function() {
+					alert("出现异常");
+				}
+			});
+		
+
+	</script>
+	</body>
+
+</html>

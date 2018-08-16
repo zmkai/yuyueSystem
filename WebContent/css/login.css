@@ -1,0 +1,24 @@
+#shouye {
+	background - image: url(img / shoye.jpg);
+	width: 300 px;
+	height: 200 px;
+	margin: auto;
+	text - align: center;
+	margin - top: 100 px;
+	background - size: cover;
+}
+
+#form {
+	padding - top: 50 px;
+}
+
+div.div1 {
+		display: block;
+		padding: 15 px;
+	}
+
+	.button {
+		position: relative;
+		margin: 0 12 px;
+		left: 20 px;
+	}
